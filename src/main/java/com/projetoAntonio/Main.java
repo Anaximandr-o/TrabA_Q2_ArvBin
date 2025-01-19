@@ -1,18 +1,23 @@
 package com.projetoAntonio;
 import java.util.*;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 public class Main {
     public static void main(String[] args) {
         Random gerador = new Random();
         for(int i = 0; i < 100; i++){
             int qtdNos = gerador.nextInt(100, 10000);
-            ArvBinBusca<Integer, Integer> arvore = new ArvBinBusca<>();
-            for(int j = 0; j < qtdNos; j++){
-                int no = gerador.nextInt(100,1000000);
-                arvore.put(no, no);
+            DescriptiveStatistics stats = new DescriptiveStatistics();
+            for(int x = 0; x <100; x++){
+                ArvBinBusca<Integer, Integer> arvore = new ArvBinBusca<>();
+                for(int j = 0; j < qtdNos; j++){
+                    int no = gerador.nextInt(100,1000000);
+                    arvore.put(no, no);
+                }
+                arvore.removeLaura(qtdNos);
+                stats.addValue(arvore.altura());
             }
-            arvore.removeLaura(qtdNos);
-
+            System.out.println("Quantidade de nós - "+ qtdNos + " Altura esperada - " + (Math.log(qtdNos) * 1.39) +" Média das alturas - "+ stats.getMean() + " Desvio padrão: " + stats.getStandardDeviation());
         }
     }
 }
