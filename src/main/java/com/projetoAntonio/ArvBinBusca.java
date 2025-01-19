@@ -1,6 +1,7 @@
 package com.projetoAntonio;
 
 import java.util.NoSuchElementException;
+import java.util.*;
 
 public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
 {
@@ -141,11 +142,6 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
     }
 
 
-    /**
-     * Retorna a altura da �rvore bin�ria de busca.
-     *
-     * @return a altura da �rvore (uma �rvore de um �nico n� possui altura 0)
-     */
     public int altura()
     {
         return altura(raiz);
@@ -162,14 +158,7 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
     }
 
 
-    /**
-     * Essa �rvore bin�ria de busca cont�m a chave fornecida?
-     *
-     * @param  chave a chave fornecida
-     * @return {@code true} se a �rvore cont�m a chave {@code chave} e
-     *         {@code false} caso contr�rio
-     * @throws IllegalArgumentException se {@code key} � {@code null}
-     */
+
     public boolean contem(Chave chave) {
         if (chave == null)
             throw new IllegalArgumentException("A chave fornecida � null!");
@@ -177,14 +166,7 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
         return get(chave) != null;
     }
 
-    /**
-     * Retorna o valor associado � chave fornecida.
-     *
-     * @param  chave a chave a ser buscada
-     * @return o valor associado � chave fornecida se tal chave se encontra na �rvore
-     *         e {@code null} se a chave n�o est� na �rvore
-     * @throws IllegalArgumentException if {@code chave} is {@code null}
-     */
+
     public Valor get(Chave chave)
     {
         return get(raiz, chave);
@@ -209,16 +191,6 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
             return x.valor;
     }
 
-    /**
-     * Insere na �rvore bin�ria de busca o par (chave, valor) fornecido. Caso a �rvore
-     * j� possua a chave especificada, o valor antigo � sobrescrito com o novo valor
-     * fornecido. Remove o n� de chave igual � chave fornecida caso o valor especificado
-     * seja {@code null}.
-     *
-     * @param  chave a chave fornecida
-     * @param  valor o valor fornecido
-     * @throws IllegalArgumentException se {@code chave} � {@code null}
-     */
     public boolean put(Chave chave, Valor valor)
     {
         if(chave == null)
@@ -251,11 +223,7 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
         return x;
     }
 
-    /**
-     * Remove o n� de menor chave da �rvore.
-     *
-     * @throws NoSuchElementException se a �rvore est� vazia
-     */
+
     public void deleteMin()
     {
         if(vazia())
@@ -277,11 +245,7 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
         return x;
     }
 
-    /**
-     * Remove o n� de maior chave da �rvore.
-     *
-     * @throws NoSuchElementException se a �rvore est� vazia
-     */
+
     public void deleteMax()
     {
         if(vazia())
@@ -290,8 +254,7 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
         raiz = deleteMax(raiz);
     }
 
-    /* M�todo recursivo que anda sempre para a direita, procurando o n�
-     * de maior chave a ser removido. */
+
     private No deleteMax(No x)
     {
         if(x.dir == null)
@@ -302,22 +265,18 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
         return x;
     }
 
-    /**
-     * Remove o n� cuja chave seja igual � {@code chave} fornecida.
-     *
-     * @param chave a chave fornecida
-     * @return {@code true} se foi poss�vel remover o n� de chave {@code chave} e
-     *         {@code false} caso contr�rio
-     */
-    public void delete(Chave chave)
+
+    public boolean delete(Chave chave)
     {
         raiz = delete(raiz, chave);
+        return raiz != null;
     }
 
     /* Remove o n� com o valor "val" da "�rvore" a partir do n� para o qual est� sendo chamada a fun��o. Obs: "ref_no" � o ponteiro que referencia o n� para o qual est� sendo chamada a fun��o, o qual pode ter que ser modificado. Retorna false se o valor n�o pertencer � "�rvore".
      */
     private No delete(No x, Chave chave)
     {
+        int contador = 0;
         if (x == null)
             return null;
 
@@ -344,20 +303,16 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
 
             /* A sub�rvore esquerda se mant�m a mesma. */
             x.esq = t.esq;
+            contador++;
         }
 
+        if (contador == 0)
+            return null;
         return x;
     }
 
 
-    /**
-     * Retorna a maior chave na �rvore que � menor ou igual � {@code chave} fornecida.
-     *
-     * @param  chave a chave fornecida
-     * @return a maior chave na �rvore menor ou igual � {@code chave}
-     * @throws NoSuchElementException se a �rvore est� vazia
-     * @throws IllegalArgumentException se a {@code chave} � {@code null}
-     */
+
     public Chave piso(Chave chave)
     {
         if (chave == null)
@@ -396,14 +351,7 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
     }
 
 
-    /**
-     * Retorna a menor chave na �rvore que � maior ou igual � {@code chave} fornecida.
-     *
-     * @param  chave a chave fornecida
-     * @return a menor chave na �rvore maior ou igual � {@code chave}
-     * @throws NoSuchElementException se a �rvore est� vazia
-     * @throws IllegalArgumentException se a {@code chave} � {@code null}
-     */
+
     public Chave topo(Chave chave)
     {
         if (chave == null)
@@ -444,13 +392,7 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
     }
 
 
-    /**
-     * Retorna o n�mero de n�s na �rvore cujas chaves s�o estritamente menores do que {@code chave}.
-     *
-     * @param  chave a chave fornecida
-     * @return o n�mero de n�s na �rvore cujas chaves s�o estritamente menores do que {@code chave}
-     * @throws IllegalArgumentException se {@code chave} � {@code null}
-     */
+
     public int rank(Chave chave) {
         /* O aluno deve fazer como exerc�cio. */
         return 0;
@@ -460,5 +402,19 @@ public class ArvBinBusca<Chave extends Comparable<Chave>, Valor>
     private int rank(Chave chave, No x) {
         /* O aluno deve fazer como exerc�cio. */
         return 0;
+    }
+
+    public void removeLaura(int qtdNos){
+        Random gerador = new Random();
+        for(int i = 0; i < (qtdNos * qtdNos); i++){
+            No no = new No((Chave) Integer.valueOf(qtdNos), (Valor) Integer.valueOf(qtdNos));
+            boolean b;
+            do{
+                b = delete(no.chave);
+            }while(!b);
+            int novoNo = gerador.nextInt(100,1000000);
+            this.put((Chave) Integer.valueOf(novoNo),(Valor) Integer.valueOf(novoNo));
+
+        }
     }
 }
