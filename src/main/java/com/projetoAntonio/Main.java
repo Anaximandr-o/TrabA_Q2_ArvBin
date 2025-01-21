@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Random gerador = new Random();
         for(int i = 0; i < 100; i++){
-            int qtdNos = gerador.nextInt(100, 10000);
+            int qtdNos = gerador.nextInt(100, 1000);
             DescriptiveStatistics stats = new DescriptiveStatistics();
             for(int x = 0; x <100; x++){
                 ArvBinBusca<Integer, Integer> arvore = new ArvBinBusca<>();
@@ -17,7 +17,7 @@ public class Main {
                 arvore.removeLaura(qtdNos);
                 stats.addValue(arvore.altura());
             }
-            System.out.println("Quantidade de nós - "+ qtdNos + " Altura esperada - " + (Math.log(qtdNos) * 1.39) +" Média das alturas - "+ stats.getMean() + " Desvio padrão: " + stats.getStandardDeviation());
+            System.out.println("Quantidade de nós - "+ qtdNos + " Altura esperada - " + ((Math.log(qtdNos)/Math.log(2)) * 4.311 - 1.953) +" Média das alturas - "+ stats.getMean() + " Desvio padrão: " + stats.getStandardDeviation());
         }
     }
 }
